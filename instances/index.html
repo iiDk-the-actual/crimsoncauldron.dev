@@ -515,6 +515,23 @@ Providing a token allows for higher rate limits when fetching data, but it is no
         .token-indicator.set   { color: var(--online); }
         .token-indicator.unset { color: var(--muted); opacity: 0.6; }
 
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+            padding: 1.2rem 2rem;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--muted);
+            opacity: 0.7;
+        }
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        footer a:hover { text-decoration: underline; }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 720px) {
             .container { flex-direction: column; width: 95%; }
@@ -630,6 +647,10 @@ Providing a token allows for higher rate limits when fetching data, but it is no
         <p class="state-msg">Fetching forks<span class="loading-dots"></span></p>
     </main>
 </div>
+
+<footer>
+    2026 crimsoncauldron. community source, i no affiliation to any repositories shown. <a href="https://github.com/iiDk-the-actual/crimsoncauldron.dev" target="_blank" rel="noopener">github</a>
+</footer>
 
 <script>
     // ── CONFIG ────────────────────────────────────────────
