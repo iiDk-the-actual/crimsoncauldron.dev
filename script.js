@@ -108,19 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const names = [
-    "crimson",
-    "crimson?",
-    "goldentrophy",
-    "iidk",
-    "crimsoncauldron",
-    "crimsoncc",
-    "goldentrophii",
-    "aa_goldentrophy",
-    "aa_crimsoncauldron",
-    "iiwashere",
-    "herewasii",
-    "kdii",
-    "grayson"
+    "crimson"
   ];
   let name = names[Math.floor(Math.random() * names.length)];
   let nameText = '';
@@ -137,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nameIndex--;
     } else if (nameIndex === name.length) {
       isNameDeleting = true;
-      setTimeout(typeWriterName, 2000);
+      // setTimeout(typeWriterName, 2000);
       return;
     } else if (nameIndex === 0) {
       isNameDeleting = false;
@@ -158,29 +146,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   const bioMessages = [
-    "15yo creature on the internet",
-    "only 15 years old, don't think about it",
     "i don't have a brother",
-    "creator of some stupid mod",
-    "owner of goldentrophy software",
-
-    "403 forbidden",
-    "object reference not set to an instance of an object",
-    "winforms is so bad it's good",
 
     "i support mostly everyone",
     "never underestimate yourself",
-    "check out my site: 127.0.0.1:3000",
-
-    "i hate cosine",
-    "mechanical keyboards",
     "contacting the mothership",
 
     "i <3 debian",
     "i hate typescript",
 
-    "admin@goldentrophy.software",
-    "hi nick"
+    "admin@goldentrophy.software"
   ];
   let bioText = '';
   let bioIndex = 0;
