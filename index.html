@@ -17,6 +17,7 @@
         <div id="username" class="username">@--</div>
         <div id="bio" class="bio"></div>
         <div id="location" class="meta-row"></div>
+        <div id="localtime" class="meta-row"></div>
       </div>
     </div>
 
@@ -49,6 +50,16 @@
       </button>
       <div class="drop-body" id="body-socials" aria-hidden="true">
         <div id="socials-list"></div>
+      </div>
+    </div>
+
+    <div class="card drop-card" id="contacts-card">
+      <button class="drop-header" onclick="toggleDrop('contacts')" aria-expanded="false">
+        <span class="drop-label">contact</span>
+        <span class="drop-arrow" id="arrow-contacts">v</span>
+      </button>
+      <div class="drop-body" id="body-contacts" aria-hidden="true">
+        <div id="contacts-list"></div>
       </div>
     </div>
 

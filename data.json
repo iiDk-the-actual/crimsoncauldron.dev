@@ -1,6 +1,8 @@
 {
   "github": "iiDk-the-actual",
   "title": "crimsoncauldron.dev",
+  "timezone": "America/Detroit",
+  "location": "MI, US",
   "socials": [
     { "label": "YouTube",  "url": "https://youtube.com/@iiDk_",                "id": "youtube"  },
     { "label": "Telegram", "url": "https://t.me/crimsoncauldron",               "id": "telegram" },
@@ -8,6 +10,10 @@
     { "label": "GitHub",   "url": "https://github.com/iiDk-the-actual",         "id": "github"   },
     { "label": "Patreon",  "url": "https://www.patreon.com/iiDk",               "id": "patreon"  },
     { "label": "Cashapp",  "url": "https://cash.app/$iiWasHere",                "id": "cashapp"  }
+  ],
+  "contacts": [
+    { "label": "Discord", "value": "crimsoncauldron", "id": "discord" },
+    { "label": "Email",   "value": "admin@goldentrophy.software", "id": "email" }
   ],
   "crypto": [
     { "label": "BTC", "address": "bc1qtmrqtq4ag720tvux64ff3rjp632jy2d447p3nx" },

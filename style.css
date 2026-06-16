@@ -213,6 +213,36 @@ body {
 }
 .s-icon svg { width: 100%; height: 100%; display: block; }
 
+/* ── Contact items ────────────────────────────────────────────── */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--surface0);
+  color: var(--subtext1);
+  font-family: inherit;
+  font-size: var(--fs);
+  text-decoration: none;
+  cursor: pointer;
+}
+.contact-item:hover { background: var(--surface0); color: var(--text); }
+.contact-item:hover .s-icon { color: var(--blue); }
+
+.contact-label {
+  color: var(--overlay0);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  flex-shrink: 0;
+  width: 52px;
+}
+
+.contact-value {
+  flex: 1;
+  color: var(--sapphire);
+}
+.contact-item:hover .contact-value { color: var(--teal); }
+
 /* ── Crypto items ─────────────────────────────────────────────── */
 .crypto-item {
   display: flex;
