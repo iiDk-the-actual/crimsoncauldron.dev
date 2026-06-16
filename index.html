@@ -13,11 +13,27 @@
     <div class="card profile-card">
       <img id="avatar" class="avatar" src="" alt="avatar" onclick="openLightbox(this.src)" style="cursor:pointer">
       <div class="profile-info">
-        <div id="display-name" class="display-name">--</div>
+        <div class="display-name-row">
+          <span id="display-name" class="display-name">--</span>
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-label" id="status-label"></span>
+        </div>
         <div id="username" class="username">@--</div>
         <div id="bio" class="bio"></div>
         <div id="location" class="meta-row"></div>
         <div id="localtime" class="meta-row"></div>
+      </div>
+    </div>
+
+    <div class="card now-card" id="now-card" style="display:none">
+      <div class="now-inner">
+        <img id="now-art" src="" alt="" class="now-art">
+        <div class="now-info">
+          <div class="now-state" id="now-state">now playing</div>
+          <div class="now-title" id="now-title"></div>
+          <div class="now-artist" id="now-artist"></div>
+          <div class="now-ascii-bar" id="now-ascii-bar"></div>
+        </div>
       </div>
     </div>
 

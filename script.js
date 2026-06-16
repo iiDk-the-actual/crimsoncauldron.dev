@@ -21,11 +21,102 @@ async function init() {
 
   if (cfg.title) document.title = cfg.title;
 
+  if (cfg.activity_repo) startActivity(cfg.activity_repo);
   buildSocials(cfg.socials || []);
   buildContacts(cfg.contacts || []);
   buildCrypto(cfg.crypto || []);
   startClock(cfg.timezone || 'UTC', cfg.location || '');
   fetchGitHub(cfg.github);
+}
+
+/* ── Activity (online status + now playing) ───────────────────── */
+let _song = null;
+
+function startActivity(repo) {
+  const pollOnline = async () => {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${repo}/contents/online.json`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      const d = await r.json();
+      const online = JSON.parse(atob(d.content));
+      const ageMin = (Date.now() - new Date(online.timestamp)) / 60000;
+      setOnline(ageMin < 15);
+    } catch {
+      setOnline(false);
+    }
+  };
+
+  const pollSong = async () => {
+    try {
+      const r = await fetch(`https://api.github.com/repos/${repo}/contents/song.json`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      const d = await r.json();
+      _song = JSON.parse(atob(d.content));
+    } catch {
+      _song = null;
+    }
+  };
+
+  pollOnline();
+  pollSong();
+  setInterval(pollOnline,   120_000);
+  setInterval(pollSong,     600_000);
+  setInterval(tickProgress,   1_000);
+}
+
+let _online = false;
+
+function setOnline(online) {
+  _online = online;
+  const dot   = document.getElementById('status-dot');
+  const label = document.getElementById('status-label');
+  dot.className   = `status-dot ${online ? 'online' : 'offline'}`;
+  label.className = `status-label ${online ? 'online' : 'offline'}`;
+  label.textContent = online ? 'online' : 'offline';
+}
+
+function tickProgress() {
+  const card = document.getElementById('now-card');
+  const art  = document.getElementById('now-art');
+
+  const playing = _online && _song && _song.status === 'Playing' && _song.duration;
+
+  if (!playing) {
+    card.style.display = 'none';
+    return;
+  }
+
+  const liveElapsed = Math.min(
+    _song.elapsed + (Date.now() - new Date(_song.timestamp)) / 1000,
+    _song.duration
+  );
+  const progress = Math.min(liveElapsed / _song.duration, 1);
+  const filled   = Math.round(progress * 20);
+  const empty    = 20 - filled;
+
+  document.getElementById('now-title').textContent    = _song.title;
+  document.getElementById('now-artist').textContent   = _song.artist;
+  document.getElementById('now-state').textContent    = 'now playing';
+  document.getElementById('now-ascii-bar').textContent =
+    `[${'#'.repeat(filled)}${'-'.repeat(empty)}] ${fmtTime(liveElapsed)} / ${fmtTime(_song.duration)}`;
+
+  if (_song.icon) {
+    const mime = _song.icon.startsWith('/9j/') ? 'image/jpeg' : 'image/png';
+    art.src           = `data:${mime};base64,${_song.icon}`;
+    art.style.display = '';
+  } else {
+    art.src           = '';
+    art.style.display = 'none';
+  }
+  card.style.display = '';
+}
+
+function fmtTime(secs) {
+  const s = Math.max(0, Math.floor(secs));
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, '0')}`;
 }
 
 /* ── Socials ──────────────────────────────────────────────────── */

@@ -1,7 +1,8 @@
 {
   "github": "iiDk-the-actual",
   "title": "crimsoncauldron.dev",
-  "timezone": "America/Detroit",
+  "activity_repo": "iiDk-the-actual/Activity",
+"timezone": "America/Detroit",
   "location": "MI, US",
   "socials": [
     { "label": "YouTube",  "url": "https://youtube.com/@iiDk_",                "id": "youtube"  },
