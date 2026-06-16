@@ -1,425 +1,262 @@
-let hasUserInteracted = false;
+const ICONS = {
+  youtube: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1C24 15.9 24 12 24 12s0-3.9-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>`,
+  telegram: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.9 8.2-2 9.4c-.1.7-.6.9-1.1.5l-3-2.2-1.4 1.4c-.2.2-.4.3-.7.3l.2-3.1 5.4-4.9c.2-.2 0-.3-.3-.1L7 13.5 4.1 12.6c-.7-.2-.7-.7.1-1l10.7-4.1c.7-.3 1.3.2 1 1z"/></svg>`,
+  discord:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3c-.2.4-.5.9-.7 1.3a18.3 18.3 0 0 0-5.4 0A13 13 0 0 0 8.6 3a19.7 19.7 0 0 0-4.9 1.4C.5 8.5-.3 12.5.1 16.4a19.9 19.9 0 0 0 6 3c.5-.7.9-1.4 1.3-2.1-.7-.3-1.4-.6-2-1a11 11 0 0 0 .5-.4 14.2 14.2 0 0 0 12.1 0l.5.4c-.6.4-1.3.7-2 1 .4.7.8 1.5 1.3 2.1a19.9 19.9 0 0 0 6-3c.5-4.5-.7-8.5-3.5-12zM8 13.8c-1.2 0-2.1-1.1-2.1-2.4S6.8 9 8 9s2.1 1.1 2.1 2.4S9.2 13.8 8 13.8zm8 0c-1.2 0-2.1-1.1-2.1-2.4S14.8 9 16 9s2.1 1.1 2.1 2.4S17.2 13.8 16 13.8z"/></svg>`,
+  github:   `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 5.7 18.3 6 18.3 6c.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6C20.6 21.8 24 17.3 24 12c0-6.6-5.4-12-12-12z"/></svg>`,
+  twitter:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 1h3.7l-8 9.1L24 23h-7.4l-5.8-7.5L4.5 23H.8l8.6-9.8L0 1h7.6l5.2 6.8L18.9 1zm-1.3 19.8h2L6.6 3.2H4.3L17.6 20.8z"/></svg>`,
+  patreon:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M14.82 2.41C11.57 2.41 8.93 5.05 8.93 8.3c0 3.24 2.64 5.87 5.89 5.87 3.24 0 5.88-2.63 5.88-5.87 0-3.25-2.64-5.89-5.88-5.89zM2 21.6h3.5V2.41H2V21.6z"/></svg>`,
+  cashapp:  `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>`,
+};
 
-function initMedia() {
-  console.log("initMedia called");
-  const backgroundMusic = document.getElementById('background-music');
-  backgroundMusic.src = `assets/background_music${Math.floor(Math.random() * 3)}.mp3`;
-  if (!backgroundMusic) { 
-    console.error("Media elements not found");
+async function init() {
+  let cfg;
+  try {
+    const r = await fetch('./data.json');
+    cfg = await r.json();
+  } catch {
+    console.error('Failed to load data.json');
     return;
   }
-  backgroundMusic.volume = 0.3;
+
+  if (cfg.title) document.title = cfg.title;
+
+  buildSocials(cfg.socials || []);
+  buildCrypto(cfg.crypto || []);
+  fetchGitHub(cfg.github);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const startScreen = document.getElementById('start-screen');
-  const startText = document.getElementById('start-text');
-  const profileName = document.getElementById('profile-name');
-  const profileBio = document.getElementById('profile-bio');
-  const visitorCount = document.getElementById('visitor-count');
-  const backgroundMusic = document.getElementById('background-music');
-  const resultsButton = document.getElementById('results-theme');
-  const volumeIcon = document.getElementById('volume-icon');
-  const volumeSlider = document.getElementById('volume-slider');
-  const glitchOverlay = document.querySelector('.glitch-overlay');
-  const profileBlock = document.getElementById('profile-block');
-  const skillsBlock = document.getElementById('skills-block');
-  const pythonBar = document.getElementById('python-bar');
-  const javaBar = document.getElementById('java-bar');
-  const cssBar = document.getElementById('css3-bar');
-  const htmlBar = document.getElementById('html5-bar');
-  const javascriptBar = document.getElementById('javascript-bar');
-  const nodejsBar = document.getElementById('nodejs-bar');
-  const typescriptBar = document.getElementById('typescript-bar');
-  const csharpBar = document.getElementById('csharp-bar');
-  const resultsHint = document.getElementById('results-hint');
-  const profilePicture = document.querySelector('.profile-picture');
-  const profileContainer = document.querySelector('.profile-container');
-
-  const startMessages = ["click to view", "click to stalk", "click just because", "click to come inside", "click to visualize", "click to unlock", "click to feast", "click to open the door", "click to gently open the door", "click to sprint", "click to jump", "click to say apple"];
-  const startMessage = startMessages[Math.floor(Math.random() * startMessages.length)];
-  let startTextContent = '';
-  let startIndex = 0;
-  let startCursorVisible = true;
-
-  function typeWriterStart() {
-    if (startIndex < startMessage.length) {
-      startTextContent = startMessage.slice(0, startIndex + 1);
-      startIndex++;
-    }
-    startText.textContent = startTextContent + (startCursorVisible ? '|' : ' ');
-    setTimeout(typeWriterStart, 100);
+/* ── Socials ──────────────────────────────────────────────────── */
+function buildSocials(socials) {
+  const list = document.getElementById('socials-list');
+  if (!socials.length) {
+    list.innerHTML = '<div class="social-item muted">no socials configured</div>';
+    return;
   }
-
-
-  setInterval(() => {
-    startCursorVisible = !startCursorVisible;
-    startText.textContent = startTextContent + (startCursorVisible ? '|' : ' ');
-  }, 500);
-
-
-  function initializeVisitorCounter() {
-    totalVisitors = Math.floor(Math.random() * 900000) + 100000;
-    visitorCount.textContent = totalVisitors.toLocaleString();
-  }
-  
-  initializeVisitorCounter();
-
-  setInterval(initializeVisitorCounter, 10);
-
-  startScreen.addEventListener('click', () => {
-    startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen click:", err);
-    });
-    profileBlock.classList.remove('hidden');
-    gsap.fromTo(profileBlock,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power2.out', onComplete: () => {
-        profileBlock.classList.add('profile-appear');
-        profileContainer.classList.add('orbit');
-      }}
-    );
-    
-    typeWriterName();
-    typeWriterBio();
+  socials.forEach(s => {
+    const a = document.createElement('a');
+    a.className = 'social-item';
+    a.href = s.url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    const icon = ICONS[s.id] || ICONS.github;
+    a.innerHTML = `<span class="s-icon">${icon}</span><span>${s.label}</span>`;
+    list.appendChild(a);
   });
-
-  startScreen.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    startScreen.classList.add('hidden');
-    backgroundMusic.muted = false;
-    backgroundMusic.play().catch(err => {
-      console.error("Failed to play music after start screen touch:", err);
-    });
-    profileBlock.classList.remove('hidden');
-    gsap.fromTo(profileBlock,
-      { opacity: 0, y: -50 },
-      { opacity: 1, y: 0, duration: 1, ease: 'power2.out', onComplete: () => {
-        profileBlock.classList.add('profile-appear');
-        profileContainer.classList.add('orbit');
-      }}
-    );
-
-    typeWriterName();
-    typeWriterBio();
-  });
-
-
-  const names = [
-    "crimson"
-  ];
-  let name = names[Math.floor(Math.random() * names.length)];
-  let nameText = '';
-  let nameIndex = 0;
-  let isNameDeleting = false;
-  let nameCursorVisible = true;
-
-  function typeWriterName() {
-    if (!isNameDeleting && nameIndex < name.length) {
-      nameText = name.slice(0, nameIndex + 1);
-      nameIndex++;
-    } else if (isNameDeleting && nameIndex > 0) {
-      nameText = name.slice(0, nameIndex - 1);
-      nameIndex--;
-    } else if (nameIndex === name.length) {
-      isNameDeleting = true;
-      // setTimeout(typeWriterName, 2000);
-      return;
-    } else if (nameIndex === 0) {
-      isNameDeleting = false;
-      name = names[Math.floor(Math.random() * names.length)];
-    }
-    profileName.textContent = nameText + (nameCursorVisible ? '|' : ' ');
-    if (Math.random() < 0.1) {
-      profileName.classList.add('glitch');
-      setTimeout(() => profileName.classList.remove('glitch'), 200);
-    }
-    setTimeout(typeWriterName, isNameDeleting ? 50 : Math.floor(Math.random() * 101) + 30);
-  }
-
-  setInterval(() => {
-    nameCursorVisible = !nameCursorVisible;
-    profileName.textContent = nameText + (nameCursorVisible ? '|' : ' ');
-  }, 500);
-
-
-  const bioMessages = [
-    "i don't have a brother",
-
-    "i support mostly everyone",
-    "never underestimate yourself",
-    "contacting the mothership",
-
-    "i <3 debian",
-    "i hate typescript",
-
-    "admin@goldentrophy.software"
-  ];
-  let bioText = '';
-  let bioIndex = 0;
-  let bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
-  let isBioDeleting = false;
-  let bioCursorVisible = true;
-
-  function typeWriterBio() {
-    if (!isBioDeleting && bioIndex < bioMessages[bioMessageIndex].length) {
-      bioText = bioMessages[bioMessageIndex].slice(0, bioIndex + 1);
-      bioIndex++;
-    } else if (isBioDeleting && bioIndex > 0) {
-      bioText = bioMessages[bioMessageIndex].slice(0, bioIndex - 1);
-      bioIndex--;
-    } else if (bioIndex === bioMessages[bioMessageIndex].length) {
-      isBioDeleting = true;
-      setTimeout(typeWriterBio, 2000);
-      return;
-    } else if (bioIndex === 0 && isBioDeleting) {
-      isBioDeleting = false;
-      bioMessageIndex = Math.floor(Math.random() * bioMessages.length);
-    }
-
-    profileBio.textContent = bioText + (bioCursorVisible ? '|' : ' ');
-
-    if (Math.random() < 0.1) {
-      profileBio.classList.add('glitch');
-      setTimeout(() => profileBio.classList.remove('glitch'), 200);
-    }
-
-    setTimeout(typeWriterBio, isNameDeleting ? 20 : Math.floor(Math.random() * 101) + 30);
 }
 
-
-  setInterval(() => {
-    bioCursorVisible = !bioCursorVisible;
-    profileBio.textContent = bioText + (bioCursorVisible ? '|' : ' ');
-  }, 500);
-
-
-  let currentAudio = backgroundMusic;
-  let isMuted = false;
-
-  volumeIcon.addEventListener('click', () => {
-    isMuted = !isMuted;
-    currentAudio.muted = isMuted;
-    volumeIcon.innerHTML = isMuted
-      ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>`
-      : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
+/* ── Crypto ───────────────────────────────────────────────────── */
+function buildCrypto(crypto) {
+  const list = document.getElementById('crypto-list');
+  if (!crypto.length) {
+    list.innerHTML = '<div class="crypto-item muted">no addresses configured</div>';
+    return;
+  }
+  crypto.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'crypto-item';
+    div.title = 'click to copy';
+    div.innerHTML = `
+      <span class="c-label">${esc(c.label)}</span>
+      <span class="c-addr">${esc(c.address)}</span>
+      <span class="c-copy">copy</span>
+    `;
+    div.addEventListener('click', () => copyText(c.address));
+    list.appendChild(div);
   });
+}
 
-  volumeIcon.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    isMuted = !isMuted;
-    currentAudio.muted = isMuted;
-    volumeIcon.innerHTML = isMuted
-      ? `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>`
-      : `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
-  });
+/* ── GitHub ───────────────────────────────────────────────────── */
+async function fetchGitHub(username) {
+  if (!username) return;
+  try {
+    const r = await fetch(`https://api.github.com/users/${username}`);
+    if (!r.ok) throw new Error(r.status);
+    const u = await r.json();
 
-  volumeSlider.addEventListener('input', () => {
-    currentAudio.volume = volumeSlider.value;
-    isMuted = false;
-    currentAudio.muted = false;
-    volumeIcon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>`;
-  });
- 
-  function handleTilt(e, element) {
-    const rect = element.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    let clientX, clientY;
+    document.getElementById('avatar').src = u.avatar_url;
+    document.getElementById('display-name').textContent = u.name || u.login;
+    document.getElementById('username').textContent = `@${u.login}`;
+    if (u.bio) document.getElementById('bio').textContent = u.bio;
+    if (u.location) document.getElementById('location').textContent = u.location;
 
-    if (e.type === 'touchmove') {
-      clientX = e.touches[0].clientX;
-      clientY = e.touches[0].clientY;
-    } else {
-      clientX = e.clientX;
-      clientY = e.clientY;
+    document.getElementById('stat-repos').textContent = fmt(u.public_repos);
+    document.getElementById('stat-followers').textContent = fmt(u.followers);
+    document.getElementById('stat-following').textContent = fmt(u.following);
+
+    if (u.name) document.title = u.name;
+
+    fetchStars(username);
+    fetchActivity(username);
+  } catch (e) {
+    document.getElementById('display-name').textContent = username;
+    document.getElementById('username').textContent = `@${username}`;
+    console.error('GitHub user fetch failed:', e);
+    fetchActivity(username);
+  }
+}
+
+async function fetchStars(username) {
+  try {
+    let stars = 0, page = 1;
+    while (true) {
+      const r = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&page=${page}`);
+      const repos = await r.json();
+      if (!Array.isArray(repos) || repos.length === 0) break;
+      stars += repos.reduce((sum, repo) => sum + (repo.stargazers_count || 0), 0);
+      if (repos.length < 100) break;
+      page++;
+    }
+    document.getElementById('stat-stars').textContent = fmt(stars);
+  } catch {
+    document.getElementById('stat-stars').textContent = '?';
+  }
+}
+
+async function fetchActivity(username) {
+  const list = document.getElementById('activity-list');
+  try {
+    const r = await fetch(`https://api.github.com/users/${username}/events?per_page=20`);
+    const events = await r.json();
+    if (!Array.isArray(events)) throw new Error('bad response');
+
+    const items = [];
+    for (const ev of events) {
+      const html = renderEvent(ev);
+      if (html) items.push(html);
+      if (items.length >= 8) break;
     }
 
-    const mouseX = clientX - centerX;
-    const mouseY = clientY - centerY;
+    list.innerHTML = items.length
+      ? items.join('')
+      : '<div class="act-item"><span class="act-dot">.</span><span class="act-text muted">no public activity</span></div>';
+  } catch {
+    list.innerHTML = '<div class="act-item"><span class="act-dot">.</span><span class="act-text muted">activity unavailable</span></div>';
+  }
+}
 
-    const maxTilt = 15;
-    const tiltX = (mouseY / rect.height) * maxTilt;
-    const tiltY = -(mouseX / rect.width) * maxTilt;
+function renderEvent(ev) {
+  const repo = ev.repo?.name || '?';
+  const url  = `https://github.com/${repo}`;
+  const link = `<a href="${url}" target="_blank" rel="noopener">${repo}</a>`;
+  const time = timeAgo(new Date(ev.created_at));
 
-    gsap.to(element, {
-      rotationX: tiltX,
-      rotationY: tiltY,
-      duration: 0.3,
-      ease: 'power2.out',
-      transformPerspective: 1000
-    });
+  let dot = '.';
+  let text = '';
+
+  switch (ev.type) {
+    case 'PushEvent': {
+      const n = ev.payload.size ?? ev.payload.commits?.length ?? 1;
+      dot = '+';
+      text = `pushed ${n} commit${n !== 1 ? 's' : ''} to ${link}`;
+      break;
+    }
+    case 'WatchEvent':
+      dot = '*';
+      text = `starred ${link}`;
+      break;
+    case 'ForkEvent':
+      dot = '~';
+      text = `forked ${link}`;
+      break;
+    case 'CreateEvent': {
+      const refType = ev.payload.ref_type || 'ref';
+      const ref = ev.payload.ref ? ` <span class="muted">${esc(ev.payload.ref)}</span>` : '';
+      dot = '+';
+      text = `created ${refType}${ref} in ${link}`;
+      break;
+    }
+    case 'DeleteEvent':
+      dot = '-';
+      text = `deleted ${ev.payload.ref_type || 'ref'} in ${link}`;
+      break;
+    case 'IssuesEvent':
+      dot = '!';
+      text = `${ev.payload.action || 'updated'} issue in ${link}`;
+      break;
+    case 'PullRequestEvent':
+      dot = '#';
+      text = `${ev.payload.action || 'updated'} PR in ${link}`;
+      break;
+    case 'PublicEvent':
+      dot = '@';
+      text = `published ${link}`;
+      break;
+    case 'ReleaseEvent':
+      dot = 'r';
+      text = `released <span class="muted">${esc(ev.payload.release?.tag_name || '')}</span> in ${link}`;
+      break;
+    case 'IssueCommentEvent':
+      dot = '>';
+      text = `commented on issue in ${link}`;
+      break;
+    default:
+      return null;
   }
 
-  profileBlock.addEventListener('mousemove', (e) => handleTilt(e, profileBlock));
-  profileBlock.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    handleTilt(e, profileBlock);
-  });
+  return `
+    <div class="act-item">
+      <span class="act-dot">${dot}</span>
+      <span class="act-text">${text}</span>
+      <span class="act-time">${time}</span>
+    </div>`;
+}
 
-  skillsBlock.addEventListener('mousemove', (e) => handleTilt(e, skillsBlock));
-  skillsBlock.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    handleTilt(e, skillsBlock);
-  });
+/* ── Dropdowns ────────────────────────────────────────────────── */
+function toggleDrop(id) {
+  const body   = document.getElementById(`body-${id}`);
+  const arrow  = document.getElementById(`arrow-${id}`);
+  const header = body.previousElementSibling;
+  const isOpen = body.classList.contains('open');
 
-  profileBlock.addEventListener('mouseleave', () => {
-    gsap.to(profileBlock, {
-      rotationX: 0,
-      rotationY: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-  });
-  profileBlock.addEventListener('touchend', () => {
-    gsap.to(profileBlock, {
-      rotationX: 0,
-      rotationY: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-  });
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+  header.setAttribute('aria-expanded', String(!isOpen));
+  body.setAttribute('aria-hidden', String(isOpen));
+}
 
-  skillsBlock.addEventListener('mouseleave', () => {
-    gsap.to(skillsBlock, {
-      rotationX: 0,
-      rotationY: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-  });
-  skillsBlock.addEventListener('touchend', () => {
-    gsap.to(skillsBlock, {
-      rotationX: 0,
-      rotationY: 0,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-  });
+/* ── Clipboard ────────────────────────────────────────────────── */
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => toast('copied')).catch(() => toast('copy failed'));
+}
 
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 1800);
+}
 
-  profilePicture.addEventListener('click', () => {
-    profileContainer.classList.remove('fast-orbit');
-    profileContainer.classList.remove('orbit');
-    void profileContainer.offsetWidth;
-    profileContainer.classList.add('fast-orbit');
-    setTimeout(() => {
-      profileContainer.classList.remove('fast-orbit');
-      void profileContainer.offsetWidth;
-      profileContainer.classList.add('orbit');
-    }, 500);
-  });
+/* ── Helpers ──────────────────────────────────────────────────── */
+function fmt(n) {
+  if (n == null) return '--';
+  n = Number(n);
+  if (n >= 1_000_000) return (n / 1_000_000).toFixed(1) + 'm';
+  if (n >= 1_000) return (n / 1_000).toFixed(1) + 'k';
+  return String(n);
+}
 
-  profilePicture.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    profileContainer.classList.remove('fast-orbit');
-    profileContainer.classList.remove('orbit');
-    void profileContainer.offsetWidth;
-    profileContainer.classList.add('fast-orbit');
-    setTimeout(() => {
-      profileContainer.classList.remove('fast-orbit');
-      void profileContainer.offsetWidth;
-      profileContainer.classList.add('orbit');
-    }, 500);
-  });
+function timeAgo(date) {
+  const s = Math.floor((Date.now() - date) / 1000);
+  if (s < 60) return 'just now';
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m ago`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ago`;
+  const d = Math.floor(h / 24);
+  if (d < 30) return `${d}d ago`;
+  const mo = Math.floor(d / 30);
+  if (mo < 12) return `${mo}mo ago`;
+  return `${Math.floor(mo / 12)}y ago`;
+}
 
- 
-  let isShowingSkills = false;
-  resultsButton.addEventListener('click', () => {
-    if (!isShowingSkills) {
-      gsap.to(profileBlock, {
-        x: -100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          profileBlock.classList.add('hidden');
-          skillsBlock.classList.remove('hidden');
-          gsap.fromTo(skillsBlock,
-            { x: 100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-          gsap.to(pythonBar, { width: '95%', duration: 2, ease: 'power2.out' });
-          gsap.to(javaBar, { width: '35%', duration: 2, ease: 'power2.out' });
-          gsap.to(cssBar, { width: '70%', duration: 2, ease: 'power2.out' });
-          gsap.to(htmlBar, { width: '65%', duration: 2, ease: 'power2.out' });
-          gsap.to(javascriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(nodejsBar, { width: '70%', duration: 2, ease: 'power2.out' });
-          gsap.to(typescriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(csharpBar, { width: '100%', duration: 2, ease: 'power2.out' });
-        }
-      });
-      resultsHint.classList.remove('hidden');
-      isShowingSkills = true;
-    } else {
-      gsap.to(skillsBlock, {
-        x: 100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          skillsBlock.classList.add('hidden');
-          profileBlock.classList.remove('hidden');
-          gsap.fromTo(profileBlock,
-            { x: -100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-        }
-      });
-      resultsHint.classList.add('hidden');
-      isShowingSkills = false;
-    }
-  });
+function esc(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
-  resultsButton.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    if (!isShowingSkills) {
-      gsap.to(profileBlock, {
-        x: -100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          profileBlock.classList.add('hidden');
-          skillsBlock.classList.remove('hidden');
-          gsap.fromTo(skillsBlock,
-            { x: 100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-          gsap.to(pythonBar, { width: '95%', duration: 2, ease: 'power2.out' });
-          gsap.to(javaBar, { width: '35%', duration: 2, ease: 'power2.out' });
-          gsap.to(cssBar, { width: '70%', duration: 2, ease: 'power2.out' });
-          gsap.to(htmlBar, { width: '65%', duration: 2, ease: 'power2.out' });
-          gsap.to(javascriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(nodejsBar, { width: '70%', duration: 2, ease: 'power2.out' });
-          gsap.to(typescriptBar, { width: '75%', duration: 2, ease: 'power2.out' });
-          gsap.to(csharpBar, { width: '100%', duration: 2, ease: 'power2.out' });
-        }
-      });
-      resultsHint.classList.remove('hidden');
-      isShowingSkills = true;
-    } else {
-      gsap.to(skillsBlock, {
-        x: 100,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in',
-        onComplete: () => {
-          skillsBlock.classList.add('hidden');
-          profileBlock.classList.remove('hidden');
-          gsap.fromTo(profileBlock,
-            { x: -100, opacity: 0 },
-            { x: 0, opacity: 1, duration: 0.5, ease: 'power2.out' }
-          );
-        }
-      });
-      resultsHint.classList.add('hidden');
-      isShowingSkills = false;
-    }
-  });
-
-
-  typeWriterStart();
-});
+init();

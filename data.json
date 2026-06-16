@@ -1,0 +1,18 @@
+{
+  "github": "iiDk-the-actual",
+  "title": "crimsoncauldron.dev",
+  "socials": [
+    { "label": "YouTube",  "url": "https://youtube.com/@iiDk_",                "id": "youtube"  },
+    { "label": "Telegram", "url": "https://t.me/crimsoncauldron",               "id": "telegram" },
+    { "label": "Discord",  "url": "https://discord.gg/iidk",                    "id": "discord"  },
+    { "label": "GitHub",   "url": "https://github.com/iiDk-the-actual",         "id": "github"   },
+    { "label": "Patreon",  "url": "https://www.patreon.com/iiDk",               "id": "patreon"  },
+    { "label": "Cashapp",  "url": "https://cash.app/$iiWasHere",                "id": "cashapp"  }
+  ],
+  "crypto": [
+    { "label": "BTC", "address": "bc1qtmrqtq4ag720tvux64ff3rjp632jy2d447p3nx" },
+    { "label": "ETH", "address": "0xa1A78771422F602d9Ded0E8373d5A3D77E146877" },
+    { "label": "LTC", "address": "LaoNB7KADaGGb5ik8RhEBhAFdhM9pu5se5"         },
+    { "label": "XRP", "address": "rpLLN1Gse5zFnVxwQkMvh6jvKKtPrAjvLV"         }
+  ]
+}
