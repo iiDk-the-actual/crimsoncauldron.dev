@@ -11,7 +11,7 @@
   <div id="app">
 
     <div class="card profile-card">
-      <img id="avatar" class="avatar" src="" alt="avatar">
+      <img id="avatar" class="avatar" src="" alt="avatar" onclick="openLightbox(this.src)" style="cursor:pointer">
       <div class="profile-info">
         <div id="display-name" class="display-name">--</div>
         <div id="username" class="username">@--</div>
@@ -72,6 +72,11 @@
   </div>
 
   <div id="toast" class="toast"></div>
+
+  <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">x</button>
+    <img id="lightbox-img" src="" alt="avatar">
+  </div>
 
   <script src="script.js"></script>
 </body>

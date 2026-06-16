@@ -303,6 +303,41 @@ body {
 
 .muted { color: var(--overlay0); }
 
+/* ── Lightbox ─────────────────────────────────────────────────── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: grayscale(100%);
+  -webkit-backdrop-filter: grayscale(100%);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: min(320px, 80vw);
+  max-height: 80vh;
+  border: 1px solid var(--surface1);
+  display: block;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: var(--mantle);
+  border: 1px solid var(--surface1);
+  color: var(--subtext0);
+  font-family: inherit;
+  font-size: var(--fs);
+  padding: 4px 10px;
+  cursor: pointer;
+}
+.lightbox-close:hover { color: var(--text); background: var(--surface0); }
+
 /* ── Toast ────────────────────────────────────────────────────── */
 .toast {
   position: fixed;
